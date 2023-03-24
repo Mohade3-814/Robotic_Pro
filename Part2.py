@@ -10,16 +10,16 @@ hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 # Define the lower and upper bounds of the red color in HSV
 #lower_red = np.array([0, 50, 50])
 #upper_red = np.array([10, 255, 255])
-lower_red2 = np.array([170, 50, 50])
-upper_red2 = np.array([180, 255, 255])
+lower_red = np.array([170, 50, 50])
+upper_red = np.array([180, 255, 255])
 
 # Create a mask for the red color
 #mask1 = cv2.inRange(hsv, lower_red, upper_red)
-mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+mask = cv2.inRange(hsv, lower_red, upper_red)
 #mask = cv2.bitwise_or(mask1, mask2)
 
 # Apply morphological operation to remove noise and small objects
-mask = cv2.erode(mask2, None, iterations=2)
+mask = cv2.erode(mask, None, iterations=2)
 mask = cv2.dilate(mask, None, iterations=2)
 
 # Find contours in the mask

@@ -20,7 +20,7 @@ upper_red = (10, 255, 255)
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
 # Create video capture object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("test3.mp4")
 
 while not rospy.is_shutdown():
 
