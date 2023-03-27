@@ -20,7 +20,7 @@ upper_red = (10, 255, 255)
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
 # Create video capture object
-cap = cv2.VideoCapture("test3.mp4")
+cap = cv2.VideoCapture('test3.mp4')
 
 while not rospy.is_shutdown():
 
@@ -40,21 +40,16 @@ while not rospy.is_shutdown():
     # Find contours in mask
     contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Filter contours to keep only circular shapes and those that match gate size
-    filtered_contours = []
-    for cnt in contours:
-        area = cv2.contourArea(cnt)
-        perimeter = cv2.arcLength(cnt, True)
-        circularity = 4 * 3.14 * area / (perimeter * perimeter)
-        if area > 1000 and circularity > 0.7:
-            filtered_contours.append(cnt)
 
-    # Draw circle at center of filtered contours
-    for cnt in filtered_contours:
-        (x, y), radius = cv2.minEnclosingCircle(cnt)
-        center = (int(x), int(y))
-        radius = int(radius)
-        cv2.circle(frame, center, radius, (0, 255, 0), 2)
+    # Draw circle at the center of contours
+    for contour in contours:
+        moments = cv2.moments(contour)
+        if moments['m00'] != 0 :
+           center = (int(moments['m10'] / moments['m00']), int(moments['m01'] / moments['m00']))
+        else :
+           center = (0 , 0)
+
+        cv2.circle(frame , center, 5, (0, 0, 255), -1)
 
     # Publish resulting image
     try:

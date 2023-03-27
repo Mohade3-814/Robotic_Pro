@@ -36,7 +36,7 @@ mask = cv2.dilate(mask, None, iterations=2)
 contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 # Filter out contours that are too small or too large
-min_area = 500
+min_area = 1000
 max_area = 100000
 valid_contours = []
 for contour in contours:
